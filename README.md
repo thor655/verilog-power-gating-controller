@@ -33,8 +33,22 @@ The key sequence of operations managed by the controller is:
     vvp pg_sim
     ```
 
-## 5. Simulation Results
+## 6. Project Usefulness & Strengths
 
-The simulation will run a complete power-on, active, and power-down cycle. The testbench will print a final report to the console, quantifying the effectiveness of the controller.
+#### Usefulness
+* **Energy Efficiency:** This is a critical technique for extending battery life in mobile devices (phones, laptops, wearables) and reducing energy costs and heat in large data centers.
+* **Industry Relevance:** Power gating is a standard, non-negotiable part of virtually all modern complex System-on-Chip (SoC) designs. Understanding its control logic is a highly valuable skill in the semiconductor industry.
 
-**Expected Output:**
+#### Strengths of this Project
+* **Correct Logic Implementation:** The project successfully models and verifies the strict, sequential logic required for safe power gating, preventing common issues like data corruption.
+* **Metrics-Driven Verification:** Instead of just visually checking a waveform, the testbench calculates a quantitative result (**63.22% leakage energy saved**). This provides a concrete measure of the controller's effectiveness under the simulated workload.
+* **Modular Design:** The project is well-structured with a clear separation between the controller, the block-under-control, and the verification environment, which is excellent engineering practice.
+
+## 6. Shortcomings & Limitations
+
+This project is a **digital, behavioral-level simulation**. While it proves the control logic is correct, it has several important limitations.
+
+* **No Physical Power Measurement:** The most significant shortcoming is that **Icarus Verilog cannot measure real physical power (in Watts)**. Leakage is an analog, physical phenomenon dependent on transistor physics and voltage. The "LPU-Cycles" metric is a logical proxy used to demonstrate the *duration* of the power-off state, not the actual energy saved.
+* **Abstracted Hardware:** The design does not include the physical implementation of key components. The actual header/footer power switches, isolation cells, and state retention registers (SRRs) are only represented by the control signals that would drive them. A full implementation would require transistor-level design.
+* **Simplified Models:** The `gated_block_dummy` is not a real functional block. It only models the timing of the handshake acknowledgment. A real-world block would have complex internal states and dependencies.
+* **Limited Test Scenario:** The testbench verifies one specific "happy path" workload. A production-level verification would require hundreds of tests with randomized timings, different active/idle periods, and error injection to ensure the controller is robust under all possible conditions.
