@@ -33,7 +33,7 @@ The key sequence of operations managed by the controller is:
     vvp pg_sim
     ```
 
-## 6. Project Usefulness & Strengths
+## 5. Project Usefulness & Strengths
 
 #### Usefulness
 * **Energy Efficiency:** This is a critical technique for extending battery life in mobile devices (phones, laptops, wearables) and reducing energy costs and heat in large data centers.
